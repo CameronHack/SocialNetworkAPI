@@ -33,4 +33,22 @@ module.exports = {
       res.status(500).json(err);
     }
   },
+
+  async updateUser(req, res) {
+    try {
+      const dbUserData = await User.updateOne({ _id: req.params.userId }, { $set: req.body });
+      res.json(dbUserData);
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  },
+
+  async deleteUser(req, res) {
+    try {
+      const dbUserData = await User.deleteOne({ _id: req.params.userId });
+      res.json(dbUserData);
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  },
 };
