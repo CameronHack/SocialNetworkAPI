@@ -1,6 +1,7 @@
 const { Thought, User, Reaction } = require('../models');
 
 module.exports = {
+
   async getThoughts(req, res) {
     try {
       const thoughts = await Thought.find();
@@ -9,6 +10,7 @@ module.exports = {
       res.status(500).json(err);
     }
   },
+
   async getSingleThought(req, res) {
     try {
       const thought = await Thought.findOne({ _id: req.params.thoughtId })
@@ -25,7 +27,7 @@ module.exports = {
       res.status(500).json(err)
     }
   },
-  // create a new Thought
+
   async createThought(req, res) {
     try {
       const thought = await Thought.create(req.body);
@@ -99,4 +101,5 @@ module.exports = {
       res.status(500).json(err);
     }
   },
+  
 };

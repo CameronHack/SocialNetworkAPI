@@ -1,6 +1,7 @@
 const User = require('../models/User');
 
 module.exports = {
+
   async getUsers(req, res) {
     try {
       const users = await User.find();
@@ -9,6 +10,7 @@ module.exports = {
       res.status(500).json(err);
     }
   },
+
   async getSingleUser(req, res) {
     try {
       const user = await User.findOne({ _id: req.params.userId })
@@ -24,7 +26,7 @@ module.exports = {
       res.status(500).json(err);
     }
   },
-  // create a new user
+
   async createUser(req, res) {
     try {
       const dbUserData = await User.create(req.body);
@@ -85,4 +87,5 @@ module.exports = {
       res.status(500).json(err);
     }
   }
+  
 };
