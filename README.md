@@ -1,6 +1,6 @@
 # Social Network API
 
-Link to video
+[Link to video](https://drive.google.com/file/d/11_Sk4YMbacuwJQQXOszh9-SRUcTRwzpw/view)
 
 ## Description
 
@@ -15,6 +15,10 @@ The purpose of this social media API is to set up the necessary backend technolo
 ## Installation
 
 First, in your terminal type "npm i" to install all dependencies. Lastly, to run the server type "nodemon server.js" to start the program.
+
+![npmi](https://github.com/CameronHack/SocialNetworkAPI/assets/139071966/e66c848b-5b0a-4e58-beb8-e15c95191cb7)
+
+![server](https://github.com/CameronHack/SocialNetworkAPI/assets/139071966/62e3600f-7c11-42b3-b0fb-ea17a7c8004e)
 
 ## License
 
