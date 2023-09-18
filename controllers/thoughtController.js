@@ -11,7 +11,10 @@ module.exports = {
   },
   async getSingleThought(req, res) {
     try {
-      const thought = await Thought.findOne({ _id: req.params.thoughtId });
+      const thought = await Thought.findOne({ _id: req.params.thoughtId })
+      .select('-__v')
+      .populate('reactions');
+      
 
       if (!thought) {
         return res.status(404).json({ message: 'No thought with that ID' });
@@ -45,25 +48,16 @@ module.exports = {
     }
   },
 
-  async getReactions(req, res) {
-    try {
-      const reactions = await Reaction.find();
-      res.json(reactions);
-    } catch (err) {
-      res.status(500).json(err);
-    }
-  },
-
   async createReaction(req, res) {
     try {
       const reaction = await Reaction.create(req.body);
-      const user = await User.findOneAndUpdate(
-        { _id: req.body.userId },
-        { $addToSet: { thoughts: reaction._id } },
+      const thought = await Thought.findOneAndUpdate(
+        { _id: req.params.thoughtId },
+        { $addToSet: { reactions: reaction._id } },
         { new: true }
       );
 
-      res.json('Created the Reaction');
+      res.json(thought);
     } catch (err) {
       console.log(err);
       res.status(500).json(err);
@@ -72,8 +66,15 @@ module.exports = {
 
   async deleteReaction(req, res) {
     try {
-      const reactionData = await Reaction.deleteOne({ _id: req.params.reactionId });
-      res.json(reactionData);
+      await Reaction.deleteOne({ _id: req.params.reactionId });
+
+      const thoughtData = await Thought.findOne({ _id: req.params.thoughtId });
+  
+      thoughtData.reactions = thoughtData.reactions.filter(reactionId => reactionId != req.params.reactionId);
+  
+      await thoughtData.save();
+
+      res.json(thoughtData);
     } catch (err) {
       res.status(500).json(err);
     }
