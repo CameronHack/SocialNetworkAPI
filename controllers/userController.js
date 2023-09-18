@@ -36,8 +36,9 @@ module.exports = {
 
   async updateUser(req, res) {
     try {
-      const dbUserData = await User.updateOne({ _id: req.params.userId }, { $set: req.body });
-      res.json(dbUserData);
+      await User.updateOne({ _id: req.params.userId }, { $set: req.body });
+      const user = await User.findOne({ _id: req.params.userId })
+      res.json(user);
     } catch (err) {
       res.status(500).json(err);
     }

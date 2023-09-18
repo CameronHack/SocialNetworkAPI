@@ -79,4 +79,24 @@ module.exports = {
       res.status(500).json(err);
     }
   },
+
+  async updateThought(req, res) {
+    try {
+      await Thought.updateOne({ _id: req.params.thoughtId }, { $set: req.body });
+      const thought = await Thought.findOne({ _id: req.params.thoughtId })
+      res.json(thought);
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  },
+
+  async deleteThought(req, res) {
+    try {
+      const thoughtData = await Thought.deleteOne({ _id: req.params.thoughtId });
+      
+      res.json(thoughtData);
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  },
 };
