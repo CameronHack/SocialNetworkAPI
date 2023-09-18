@@ -63,15 +63,18 @@ module.exports = {
         { new: true }
       );
 
-      if (!user) {
-        return res
-          .status(404)
-          .json({ message: 'Reaction created, but found no user with that ID' });
-      }
-
       res.json('Created the Reaction');
     } catch (err) {
       console.log(err);
+      res.status(500).json(err);
+    }
+  },
+
+  async deleteReaction(req, res) {
+    try {
+      const reactionData = await Reaction.deleteOne({ _id: req.params.reactionId });
+      res.json(reactionData);
+    } catch (err) {
       res.status(500).json(err);
     }
   },
